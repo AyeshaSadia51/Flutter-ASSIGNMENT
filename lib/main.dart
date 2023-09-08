@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       home: HomeScreen(),
-      title: 'OSTAD APP',
+      title: 'Assignment APP',
     );
   }
 }
