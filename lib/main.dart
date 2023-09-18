@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-void main(){
+void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget{
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       home: HomeScreen(),
@@ -16,78 +15,97 @@ class MyApp extends StatelessWidget{
   }
 }
 
-class HomeScreen extends StatelessWidget{
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      backgroundColor: Colors.white,
-
       appBar: AppBar(
-        toolbarHeight: 100,
-        elevation: 70,
-        leading: Icon(Icons.store, size: 36),
-        actions: [
-          Icon(Icons.search, size: 36)
-        ],
         centerTitle: true,
-        title: Text('Home', style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 26
-        ),),
-        backgroundColor: Colors.green,
-
+        title: Text('Photo Gallery'),
       ),
-
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('This is mod 5 Assignment', style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold
-              ),)
-
-            ],
-
-          ),
-
-          RichText(text: TextSpan(
-            text: 'My ',
-            style: TextStyle(
-                color: Colors.pink,
-                fontSize: 28
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              'Welcome to My Photo Gallery!',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
-              children: [
-              TextSpan(
-                text: 'phone ',
-                style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontSize: 18
-                )
-              ),
-              TextSpan(
-                text: 'name ',
-                style: TextStyle(
-                    color: Colors.purpleAccent,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold
-                )
-              ),
-              TextSpan(
-                text: 'Your phone name',
-                style: TextStyle(
-                  color: Colors.orange
-                )
-              )
-            ]
+            SizedBox(
+              height: 28,
+            ),
 
-          ))
-        ],
-      )
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search for photos...',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+
+            GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3),
+                shrinkWrap: true,
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Photo $index clicked !!'),
+                      ));
+                    },
+                    child: Column(children: [
+                      Image.network(
+                        'https://as1.ftcdn.net/v2/jpg/00/28/08/40/1000_F_28084010_bGRJetPfBwNcO3YuRC2C3Pz7qASocWQ4.jpg',
+                        height: 100,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Photo $index',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ]),
+                  );
+                }),
+
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(
+                          'https://as1.ftcdn.net/v2/jpg/00/28/08/40/1000_F_28084010_bGRJetPfBwNcO3YuRC2C3Pz7qASocWQ4.jpg'),
+                    ),
+                    title: Text('Photo ${index + 1}'),
+                    subtitle: Text('Description for Photo ${index + 1}'),
+                  );
+                }),
+
+            Container(
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+              child: IconButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('Photos Uploaded Successfully!'),
+                  ));
+                },
+                icon: Icon(
+                  Icons.upload,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
