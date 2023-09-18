@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
                     child: Column(children: [
                       Image.network(
                         'https://as1.ftcdn.net/v2/jpg/00/28/08/40/1000_F_28084010_bGRJetPfBwNcO3YuRC2C3Pz7qASocWQ4.jpg',
-                        height: 100,
+                        height: 80,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
