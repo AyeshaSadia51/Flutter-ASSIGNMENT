@@ -74,6 +74,7 @@ class ProductListUI extends State<ProductList>{
             trailing: Column(
               children: [
                 Text("counter ${addToCart[index]}"),
+
                 Expanded(
                   child: ElevatedButton(
                     onPressed: (){
