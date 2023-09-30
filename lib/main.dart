@@ -1,150 +1,220 @@
 import 'package:flutter/material.dart';
-void main(){
-  runApp(MyApp());
+
+void main() {
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget{
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ProductList(),
-      title: "Shopping APP",
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          textTheme: TextTheme(
-            bodyLarge: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          )
-      ),
+      home: HomeScreen(),
     );
   }
 }
 
-class ProductList extends StatefulWidget{
-  const ProductList({super.key});
-  @override
-  State<StatefulWidget> createState() {
-    return ProductListUI();
-  }
-}
-
-class ProductListUI extends State<ProductList>{
-  Map<String, int> totalProducts = {
-    "Product 1": 10,
-    "Product 2": 15,
-    "Product 3": 320,
-    "Product 4": 320,
-    "Product 5": 320,
-    "Product 6": 350,
-    "Product 7": 50,
-    "Product 8": 90,
-    "Product 9": 700,
-    "Product 10": 750
-  };
-
-  List<int> addToCart = [0,0,0,0,0,0,0,0,0,0];
-
-  AlertDialog MyAlertDialog(String ProductName){
-    return AlertDialog(
-      title: Text("Congratulations!"),
-      content: Text("You've bought 5 $ProductName!"),
-      actions: [
-        TextButton(onPressed: (){Navigator.pop(context);}, child: Text("OK")),
-      ],
-    );
-  }
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Product List")),
+        title: Text('Profile'),
       ),
-      
-      body: ListView.builder(
-        itemCount: totalProducts.length,
-        itemBuilder: (context, index){
-          return ListTile(
-            title: Text("${totalProducts.keys.elementAt(index)}"),
-            subtitle: Text("\$${totalProducts.values.elementAt(index)}"),
-            trailing: Column(
-              children: [
-                Text("counter ${addToCart[index]}"),
-
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: (){
-                      if(addToCart[index] < 5){
-                        addToCart[index]++;
-                        setState(() {});
-                      }else{
-                        showDialog(context: context, barrierDismissible: false ,builder: (context){
-                          return MyAlertDialog(totalProducts.keys.elementAt(index));
-                        });
-                      }
-                    },
-                    child: Text("Buy Now"),
-                  ),
-                ),
-              ],
-            ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return OrientationBuilder(
+            builder: (context, orientation) {
+              if (orientation == Orientation.portrait) {
+                return _buildPortraitLayout();
+              } else {
+                return _buildLandscapeLayout();
+              }
+            },
           );
         },
       ),
+    );
+  }
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context){
-            return AddToCartState(addToCart: addToCart);
-          }));
-        },
-        child: Icon(Icons.shopping_cart),
+  Widget _buildLandscapeLayout() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 300,
+              width: 300,
+              margin: EdgeInsets.all(20),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                child: CircleAvatar(
+                  radius: 200,
+                  backgroundImage: NetworkImage(
+                    'https://images.pexels.com/photos/10224174/pexels-photo-10224174.jpeg',
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(top: 10, right: 10, left: 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Text(
+                        'Jhone Doe',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Wrap(
+                            children: [
+                              Text(
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet turpis eu enim tristique, in iaculis libero porttitor.',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          SizedBox(
+                            height: 700,
+                            width: 1000,
+                            child: Container(
+                              child: GridView.builder(
+                                gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 1,
+                                ),
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                    child: Image.network(
+                                      'https://gifdb.com/images/high/cute-cartoon-peach-cat-dance-mmqdbpqu279gtdz0.webp',
+                                      width: 150,
+                                      height: 150,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-}
 
-
-class AddToCartState extends StatefulWidget{
-  late List<int> addToCart;
-  AddToCartState({super.key, required this.addToCart});
-  @override
-  State<StatefulWidget> createState() {
-    return AddToCartScreen();
-  }
-}
-
-class AddToCartScreen extends State<AddToCartState>{
-  int totalProductsCount = 0;
-
-  @override
-  initState(){
-    super.initState();
-    for(int eachCartItems in widget.addToCart){
-      if(eachCartItems != 0){
-        totalProductsCount += 1;
-        setState(() {});
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Cart"),
-        centerTitle: true,
-      ),
-
-      body: Center(
+  Widget _buildPortraitLayout() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        margin: EdgeInsets.all(12),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Total Product: ${totalProductsCount}", style: Theme.of(context).textTheme.bodyLarge,),
+            Container(
+              height: 300,
+              width: 300,
+              margin: EdgeInsets.all(20),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                child: CircleAvatar(
+                  radius: 200,
+                  backgroundImage: NetworkImage(
+                    'https://images.pexels.com/photos/10224174/pexels-photo-10224174.jpeg',
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: Column(
+                children: [
+                  Container(
+                    child: Text(
+                      'Jhone Doe',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Wrap(
+                          children: [
+                            Text(
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet turpis eu enim tristique, in iaculis libero porttitor.',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 12,
+                        ),
+                        SizedBox(
+                          height: 700,
+                          width: 1000,
+                          child: Container(
+                            child: GridView.builder(
+                              gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 3,
+                                crossAxisSpacing: 1,
+                              ),
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  child: Image.network(
+                                    'https://gifdb.com/images/high/cute-cartoon-peach-cat-dance-mmqdbpqu279gtdz0.webp',
+                                    width: 150,
+                                    height: 150,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
