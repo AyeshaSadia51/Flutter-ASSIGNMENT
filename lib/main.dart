@@ -49,9 +49,9 @@ class HomeScreen extends StatelessWidget {
             Container(
               height: 300,
               width: 300,
-              margin: EdgeInsets.all(20),
+              margin: EdgeInsets.all(22),
               child: Container(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                padding: EdgeInsets.fromLTRB(22, 10, 22, 22),
                 child: CircleAvatar(
                   radius: 200,
                   backgroundImage: NetworkImage(
@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 8,
+                            height: 7,
                           ),
                           Wrap(
                             children: [
