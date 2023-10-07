@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 void main(){
   runApp(
     DevicePreview(
-      enabled: kReleaseMode, // kReleaseMode
+      enabled: kReleaseMode,
       builder: (context){
         return MyApp();
       },
