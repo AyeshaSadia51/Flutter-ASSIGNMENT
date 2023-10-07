@@ -103,7 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     int itemTotal = (int.parse(cartList[index]["Price"]) * cartList[index]["count"]).toInt();
                     return Container(
                       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                      // padding: EdgeInsets.symmetric(horizontal: 10),
                       height: 110,
                       decoration: BoxDecoration(
                           color: Colors.white,
