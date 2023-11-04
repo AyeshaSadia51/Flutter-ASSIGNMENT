@@ -11,7 +11,7 @@ class PhotoGalleryListScreen extends StatefulWidget {
 }
 
 class _PhotoGalleryListScreenState extends State<PhotoGalleryListScreen> {
-  List<Photos> photoList = [];
+  List<Photos> listOfPhotos = [];
 
   Future<List<Photos>> getPhotos() async {
     try {
@@ -24,9 +24,9 @@ class _PhotoGalleryListScreenState extends State<PhotoGalleryListScreen> {
               title: photoData["title"],
               id: photoData['id'],
               url: photoData["url"]);
-          photoList.add(photos);
+          listOfPhotos.add(photos);
         }
-        return photoList;
+        return listOfPhotos;
       } else {
         throw Exception('Failed to load images');
       }
@@ -51,7 +51,7 @@ class _PhotoGalleryListScreenState extends State<PhotoGalleryListScreen> {
                   future: getPhotos(),
                   builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
                     return ListView.separated(
-                      itemCount: photoList.length,
+                      itemCount: listOfPhotos.length,
                       separatorBuilder: (context, index) => const Divider(),
                       itemBuilder: (context, index) {
                         return ListTile(
@@ -68,9 +68,9 @@ class _PhotoGalleryListScreenState extends State<PhotoGalleryListScreen> {
                                         )));
                           },
                           leading:
-                              Image.network(photoList[index].url.toString()),
+                              Image.network(listOfPhotos[index].url.toString()),
                           title: Text(
-                            photoList[index].title.toString(),
+                            listOfPhotos[index].title.toString(),
                             style: const TextStyle(fontSize: 18),
                           ),
                         );

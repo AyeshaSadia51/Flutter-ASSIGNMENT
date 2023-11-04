@@ -23,7 +23,7 @@ class _PhotoItemScreenState extends State<PhotoItemScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 45,
+              height: 50,
             ),
             Image.network(widget.url),
             const SizedBox(
