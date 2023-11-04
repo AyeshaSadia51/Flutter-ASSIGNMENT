@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'package:flutter_assignment/screen/photo_list_screen.dart';
 
 void main() {
-  runApp(const TodoApp());
+  runApp(const GalleryApp());
 }
 
-class TodoApp extends StatelessWidget {
-  const TodoApp({super.key});
+class GalleryApp extends StatelessWidget {
+  const GalleryApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: PhotoGalleryListScreen(),
     );
   }
 }

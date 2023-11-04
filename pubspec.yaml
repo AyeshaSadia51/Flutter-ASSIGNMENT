@@ -38,6 +38,7 @@ dependencies:
   responsive_builder: ^0.7.0
   device_preview: ^1.1.0
   sizer: ^2.0.15
+  http: ^1.1.0
 
 
 dev_dependencies:
